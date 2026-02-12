@@ -1,3 +1,0 @@
-module.exports=[66188,a=>{"use strict";var b=a.i(7997);function c(){return(0,b.jsxs)("div",{className:"flex flex-col items-center justify-center h-screen text-center px-4",children:[(0,b.jsx)("h1",{className:"text-5xl md:text-5xl font-semibold text-gray-100",children:"404"}),(0,b.jsx)("h1",{className:"text-2xl md:text-3xl font-semibold mt-6",children:"This page has not been generated"}),(0,b.jsx)("p",{className:"mt-4 text-xl md:text-2xl text-gray-500",children:"Tell me what you would like on this page"})]})}a.s(["default",()=>c])}];
-
-//# sourceMappingURL=app_not-found_tsx_ef35050a._.js.map

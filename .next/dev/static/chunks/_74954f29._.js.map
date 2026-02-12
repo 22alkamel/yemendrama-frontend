@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///D:/yemendrama/yemendrama/services/category.service.ts"],"sourcesContent":["import api from '@/lib/api';\r\n\r\nexport const getCategories = () => api.get(\"/v1/categories\");\r\nexport const createCategory = (data: any) => api.post(\"/v1/categories\", data);\r\nexport const updateCategory = (id: number, data: any) => api.put(`/v1/categories/${id}`, data);\r\nexport const deleteCategory = (id: number) => api.delete(`/v1/categories/${id}`);\r\n"],"names":[],"mappings":";;;;;;;;;;AAAA;;AAEO,MAAM,gBAAgB,IAAM,wHAAG,CAAC,GAAG,CAAC;AACpC,MAAM,iBAAiB,CAAC,OAAc,wHAAG,CAAC,IAAI,CAAC,kBAAkB;AACjE,MAAM,iBAAiB,CAAC,IAAY,OAAc,wHAAG,CAAC,GAAG,CAAC,CAAC,eAAe,EAAE,IAAI,EAAE;AAClF,MAAM,iBAAiB,CAAC,KAAe,wHAAG,CAAC,MAAM,CAAC,CAAC,eAAe,EAAE,IAAI"}}]
-}
