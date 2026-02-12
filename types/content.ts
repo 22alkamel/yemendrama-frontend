@@ -1,7 +1,7 @@
 // types/content.ts
 
 export interface Episode {
-  id: number | string;
+  id: number | string; 
   title: string;
   video_url?: string; // رابط الفيديو
   videoEmbedUrl?: string; // لو تستخدم embed

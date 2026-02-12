@@ -18,15 +18,15 @@ interface Crew {
 }
 
 interface Episode {
-  id: number;
+  id: string | number; // ✅ الآن متوافق مع Content
   title: string;
-  videoEmbedUrl: string; // رابط التضمين من يوتيوب
-  thumbnail: string;     // صورة مصغرة للحلقة
-  duration: string;      // مدة الحلقة
+  video_url?: string;
+  thumbnail?: string;
+  duration?: string;
 }
 
 interface Series {
-  id: string;
+ id: string | number;
   title: string;
   description: string;
   image: string;   // صورة رئيسية للمسلسل

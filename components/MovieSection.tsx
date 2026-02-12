@@ -17,7 +17,12 @@ interface MovieSectionProps {
   type: string;
 }
 
-export default function MovieSection({ title, link, contents, type }: MovieSectionProps) {
+export default function MovieSection({
+  title,
+  link,
+  contents,
+  type,
+}: MovieSectionProps) {
   const data = contents.filter((item) => item.type === type);
   if (data.length === 0) return null;
 
@@ -57,6 +62,11 @@ export default function MovieSection({ title, link, contents, type }: MovieSecti
               movie={{
                 id: item.uuid,
                 title: item.title,
+                description: item.description ?? "",
+                genre:
+                  item.categories
+                    ?.map((cat: { id?: number; name: string }) => cat.name)
+                    .join(", ") ?? "",
                 cardimg: `http://localhost:8000${item.card_image}`,
                 image: `http://localhost:8000${item.poster_image}`,
                 rating: item.rating ?? 0,
