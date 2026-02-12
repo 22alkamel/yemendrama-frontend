@@ -25,27 +25,37 @@ export const metadata = {
 };
 
 export default async function Home() {
-  const data = await getPublishedContents();
-  const contents: Content[] = Array.isArray(data.data) ? data.data : [];
+  let contents: Content[] = [];
+
+  try {
+    const data = await getPublishedContents();
+    if (Array.isArray(data.data)) {
+      contents = data.data;
+    }
+  } catch (error) {
+    console.error("API error:", error);
+    // ترك contents فارغ بدل ما يفشل البناء
+  }
 
   return (
     <div className="min-h-screen bg-black text-white">
       <Header />
 
-      <HeroSlider
-        movies={contents
-          .filter((c: Content) => c.type === "series")
-          .map((c) => ({
-            id: c.uuid,
-            title: c.title,
-            description: c.description ?? "",
-           image: `${process.env.NEXT_PUBLIC_API_URL?.replace('/api/v1','')}${c.poster_image ?? c.card_image}`,
-
-            rating: c.rating ?? 0,
-            year: c.year ?? "",
-            genre: c.categories?.map((cat) => cat.name).join(", ") ?? "",
-          }))}
-      />
+      {contents.length > 0 && (
+        <HeroSlider
+          movies={contents
+            .filter((c: Content) => c.type === "series")
+            .map((c) => ({
+              id: c.uuid,
+              title: c.title,
+              description: c.description ?? "",
+              image: `${process.env.NEXT_PUBLIC_API_URL?.replace('/api/v1','')}${c.poster_image ?? c.card_image}`,
+              rating: c.rating ?? 0,
+              year: c.year ?? "",
+              genre: c.categories?.map((cat) => cat.name).join(", ") ?? "",
+            }))}
+        />
+      )}
 
       <div className="px-4 md:px-8 lg:px-16 py-12 space-y-16">
         <MovieSection title="المسلسلات" link="/series" contents={contents} type="series" />
@@ -59,5 +69,4 @@ export default async function Home() {
       <Footer />
     </div>
   );
-
 }
