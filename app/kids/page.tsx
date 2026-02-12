@@ -12,9 +12,10 @@ export default function Kids() {
   const [loading, setLoading] = useState(true);
   const [selectedGenre, setSelectedGenre] = useState("الكل");
   const [sortBy, setSortBy] = useState("الأحدث");
-
-  // مصفوفة الأنواع تعتمد الآن على البيانات المأخوذة من كل المحتويات
   const [genres, setGenres] = useState<string[]>(["الكل"]);
+
+  // رابط الـ API من البيئة
+  const backendUrl = process.env.NEXT_PUBLIC_API_URL?.replace("/api/v1", "") ?? "";
 
   useEffect(() => {
     async function fetchData() {
@@ -29,9 +30,7 @@ export default function Kids() {
         // بناء قائمة الأنواع (categories) من البيانات المأخوذة
         const allCategories = new Set<string>();
         kidsData.forEach((item: Content) => {
-          item.categories?.forEach((cat: { name: string }) =>
-            allCategories.add(cat.name)
-          );
+          item.categories?.forEach((cat: { name: string }) => allCategories.add(cat.name));
         });
 
         setGenres(["الكل", ...Array.from(allCategories)]);
@@ -41,29 +40,26 @@ export default function Kids() {
         setLoading(false);
       }
     }
+
     fetchData();
   }, []);
 
   const filteredKids = contents.filter(
     (item) =>
       selectedGenre === "الكل" ||
-      item.categories?.some((cat) => cat.name === selectedGenre)
+      item.categories?.some((cat: { name: string }) => cat.name === selectedGenre)
   );
 
   const sortedKids = [...filteredKids].sort((a, b) => {
-    if (sortBy === "الأحدث")
-      return (parseInt(b.year as any) || 0) - (parseInt(a.year as any) || 0);
+    if (sortBy === "الأحدث") return (parseInt(b.year as any) || 0) - (parseInt(a.year as any) || 0);
     if (sortBy === "التقييم") return (b.rating ?? 0) - (a.rating ?? 0);
-    if (sortBy === "الاسم")
-      return (a.title ?? "").localeCompare(b.title ?? "", "ar");
+    if (sortBy === "الاسم") return (a.title ?? "").localeCompare(b.title ?? "", "ar");
     return 0;
   });
 
   if (loading)
     return (
-      <div className="text-white text-center mt-20">
-        جاري تحميل محتوى الأطفال...
-      </div>
+      <div className="text-white text-center mt-20">جاري تحميل محتوى الأطفال...</div>
     );
 
   return (
@@ -116,15 +112,11 @@ export default function Kids() {
                 id: item.uuid,
                 title: item.title,
                 description: item.description ?? "",
-                image: `http://localhost:8000${
-                  item.poster_image ?? item.card_image
-                }`,
-                cardimg: `http://localhost:8000${
-                  item.card_image ?? item.poster_image
-                }`,
+                genre: item.categories?.map((cat: { name: string }) => cat.name).join(", ") ?? "",
+                image: `${backendUrl}${item.poster_image ?? item.card_image}`,
+                cardimg: `${backendUrl}${item.card_image ?? item.poster_image}`,
                 rating: item.rating ?? 0,
                 year: item.year ?? 0,
-                genre: item.categories?.map((cat) => cat.name).join(", ") ?? "",
               }}
               type="kids"
             />

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from "react";
 import Header from "../../components/Header";
@@ -14,6 +14,9 @@ export default function Plays() {
   const [sortBy, setSortBy] = useState("الأحدث");
   const [genres, setGenres] = useState<string[]>(["الكل"]);
 
+  // استخدام متغير البيئة بدل الرابط الثابت
+  const backendUrl = process.env.NEXT_PUBLIC_API_URL?.replace("/api/v1", "") ?? "";
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -26,7 +29,7 @@ export default function Plays() {
         // استخراج التصنيفات من المسرحيات
         const allCategories = new Set<string>();
         playsData.forEach((play: Content) => {
-          play.categories?.forEach((cat) => allCategories.add(cat.name));
+          play.categories?.forEach((cat: { name: string }) => allCategories.add(cat.name));
         });
         setGenres(["الكل", ...Array.from(allCategories)]);
       } catch (err) {
@@ -41,7 +44,7 @@ export default function Plays() {
   const filteredPlays = contents.filter(
     (play) =>
       selectedGenre === "الكل" ||
-      play.categories?.some((cat) => cat.name === selectedGenre)
+      play.categories?.some((cat: { name: string }) => cat.name === selectedGenre)
   );
 
   const sortedPlays = [...filteredPlays].sort((a, b) => {
@@ -108,11 +111,11 @@ export default function Plays() {
                 id: play.uuid,
                 title: play.title,
                 description: play.description ?? "",
-                image: `http://localhost:8000${play.poster_image ?? play.card_image}`,
-                cardimg: `http://localhost:8000${play.card_image ?? play.poster_image}`,
+                genre: play.categories?.map((cat: { name: string }) => cat.name).join(", ") ?? "",
+                image: `${backendUrl}${play.poster_image ?? play.card_image}`,
+                cardimg: `${backendUrl}${play.card_image ?? play.poster_image}`,
                 rating: play.rating ?? 0,
                 year: play.year ?? 0,
-                genre: play.categories?.map((cat) => cat.name).join(", ") ?? "",
               }}
               type="plays"
             />

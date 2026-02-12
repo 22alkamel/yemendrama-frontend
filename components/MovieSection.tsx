@@ -1,4 +1,3 @@
-// components/MovieSection.tsx
 "use client"; // مهم ليصبح Client Component
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -23,6 +22,8 @@ export default function MovieSection({
   contents,
   type,
 }: MovieSectionProps) {
+  const backendUrl = process.env.NEXT_PUBLIC_API_URL?.replace("/api/v1", "") ?? "";
+
   const data = contents.filter((item) => item.type === type);
   if (data.length === 0) return null;
 
@@ -67,8 +68,8 @@ export default function MovieSection({
                   item.categories
                     ?.map((cat: { id?: number; name: string }) => cat.name)
                     .join(", ") ?? "",
-                cardimg: `http://localhost:8000${item.card_image}`,
-                image: `http://localhost:8000${item.poster_image}`,
+                cardimg: `${backendUrl}${item.card_image ?? item.poster_image ?? "/images/default-show.jpg"}`,
+                image: `${backendUrl}${item.poster_image ?? item.card_image ?? "/images/default-show.jpg"}`,
                 rating: item.rating ?? 0,
                 year: item.year ?? 0,
               }}

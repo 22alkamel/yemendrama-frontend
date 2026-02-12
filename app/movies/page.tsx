@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from "react";
 import Header from "../../components/Header";
@@ -14,6 +14,9 @@ export default function Movies() {
   const [sortBy, setSortBy] = useState("الأحدث");
   const [genres, setGenres] = useState<string[]>(["الكل"]);
 
+  // استخدام متغير البيئة بدل localhost
+  const backendUrl = process.env.NEXT_PUBLIC_API_URL?.replace("/api/v1", "") ?? "";
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -26,7 +29,7 @@ export default function Movies() {
         // استخراج التصنيفات من الأفلام
         const allCategories = new Set<string>();
         moviesData.forEach((item: Content) => {
-          item.categories?.forEach((cat) => allCategories.add(cat.name));
+          item.categories?.forEach((cat: { name: string }) => allCategories.add(cat.name));
         });
         setGenres(["الكل", ...Array.from(allCategories)]);
       } catch (err) {
@@ -35,13 +38,14 @@ export default function Movies() {
         setLoading(false);
       }
     }
+
     fetchData();
   }, []);
 
   const filteredMovies = contents.filter(
     (movie) =>
       selectedGenre === "الكل" ||
-      movie.categories?.some((cat) => cat.name === selectedGenre)
+      movie.categories?.some((cat: { name: string }) => cat.name === selectedGenre)
   );
 
   const sortedMovies = [...filteredMovies].sort((a, b) => {
@@ -107,11 +111,11 @@ export default function Movies() {
                 id: movie.uuid,
                 title: movie.title,
                 description: movie.description ?? "",
-                image: `http://localhost:8000${movie.poster_image ?? movie.card_image}`,
-                cardimg: `http://localhost:8000${movie.card_image ?? movie.poster_image}`,
+                genre: movie.categories?.map((cat: { name: string }) => cat.name).join(", ") ?? "",
+                image: `${backendUrl}${movie.poster_image ?? movie.card_image}`,
+                cardimg: `${backendUrl}${movie.card_image ?? movie.poster_image}`,
                 rating: movie.rating ?? 0,
                 year: movie.year ?? 0,
-                genre: movie.categories?.map((cat) => cat.name).join(", ") ?? "",
               }}
               type="movies"
             />

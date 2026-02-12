@@ -24,6 +24,9 @@ export default function EditContentForm({
   const [cardImage, setCardImage] = useState<File | null>(null);
   const [posterImage, setPosterImage] = useState<File | null>(null);
 
+  const backendUrl =
+    process.env.NEXT_PUBLIC_API_URL?.replace("/api/v1", "") ?? "";
+
   // التصنيفات
   const [categoriesList, setCategoriesList] = useState<any[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<number[]>(
@@ -173,9 +176,7 @@ export default function EditContentForm({
               <input
                 type="checkbox"
                 checked={selectedCategories.includes(cat.id)}
-                onChange={(e) =>
-                  handleCategoryChange(cat.id, e.target.checked)
-                }
+                onChange={(e) => handleCategoryChange(cat.id, e.target.checked)}
               />
               {cat.name} ({cat.type})
             </label>
@@ -189,7 +190,7 @@ export default function EditContentForm({
 
         {content.card_image && !cardImage && (
           <img
-            src={`http://localhost:8000${content.card_image}`}
+            src={`${backendUrl}${content.card_image}`}
             className="w-32 h-20 object-cover rounded-lg mb-2"
           />
         )}
@@ -208,7 +209,7 @@ export default function EditContentForm({
 
         {content.poster_image && !posterImage && (
           <img
-            src={`http://localhost:8000${content.poster_image}`}
+            src={`${backendUrl}${content.poster_image}`}
             className="w-32 h-20 object-cover rounded-lg mb-2"
           />
         )}

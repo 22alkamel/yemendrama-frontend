@@ -13,7 +13,8 @@ export default function AdminContentDetails() {
 
   const [content, setContent] = useState<any>(null);
   const [tab, setTab] = useState<"seasons" | "episodes" | "people">("seasons");
-  const backendUrl = "http://localhost:8000";
+  const backendUrl = process.env.NEXT_PUBLIC_API_URL?.replace('/api/v1','') ?? "";
+
   
   useEffect(() => {
     if (!contentUuid) return;

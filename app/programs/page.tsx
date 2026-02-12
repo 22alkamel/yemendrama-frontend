@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from "react";
 import Header from "../../components/Header";
@@ -14,6 +14,8 @@ export default function Programs() {
   const [sortBy, setSortBy] = useState("الأحدث");
   const [genres, setGenres] = useState<string[]>(["الكل"]);
 
+  const backendUrl = process.env.NEXT_PUBLIC_API_URL?.replace("/api/v1", "") ?? "";
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -26,7 +28,7 @@ export default function Programs() {
         // استخراج التصنيفات من البرامج
         const allCategories = new Set<string>();
         programsData.forEach((item: Content) => {
-          item.categories?.forEach((cat) => allCategories.add(cat.name));
+          item.categories?.forEach((cat: { name: string }) => allCategories.add(cat.name));
         });
         setGenres(["الكل", ...Array.from(allCategories)]);
       } catch (err) {
@@ -41,7 +43,7 @@ export default function Programs() {
   const filteredPrograms = contents.filter(
     (item) =>
       selectedGenre === "الكل" ||
-      item.categories?.some((cat) => cat.name === selectedGenre)
+      item.categories?.some((cat: { name: string }) => cat.name === selectedGenre)
   );
 
   const sortedPrograms = [...filteredPrograms].sort((a, b) => {
@@ -108,11 +110,11 @@ export default function Programs() {
                 id: item.uuid,
                 title: item.title,
                 description: item.description ?? "",
-                image: `http://localhost:8000${item.poster_image ?? item.card_image}`,
-                cardimg: `http://localhost:8000${item.card_image ?? item.poster_image}`,
+                genre: item.categories?.map((cat: { name: string }) => cat.name).join(", ") ?? "",
+                image: `${backendUrl}${item.poster_image ?? item.card_image}`,
+                cardimg: `${backendUrl}${item.card_image ?? item.poster_image}`,
                 rating: item.rating ?? 0,
                 year: item.year ?? 0,
-                genre: item.categories?.map((cat) => cat.name).join(", ") ?? "",
               }}
               type="programs"
             />

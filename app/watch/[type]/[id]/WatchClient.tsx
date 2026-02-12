@@ -11,7 +11,9 @@ interface WatchClientProps {
 
 export default function WatchClient({ show, type }: WatchClientProps) {
   const router = useRouter();
-  const backendUrl = "http://localhost:8000";
+
+  // رابط السيرفر الخارجي من المتغير البيئي
+  const backendUrl = process.env.NEXT_PUBLIC_API_URL?.replace("/api/v1", "") ?? "";
 
   // جمع كل الحلقات
   const allEpisodes: Episode[] = useMemo(() => {
@@ -25,24 +27,21 @@ export default function WatchClient({ show, type }: WatchClientProps) {
     allEpisodes[0] || null
   );
 
-  // جلب كل الأعمال من نفس النوع الدقيق
+  // جلب كل الأعمال المشابهة
   const [similarWorks, setSimilarWorks] = useState<Content[]>([]);
 
   useEffect(() => {
     fetch(`${backendUrl}/api/v1/contents?type=${type}&limit=20`)
       .then(res => res.json())
       .then(data => {
-        // فلترة الأعمال التي تطابق نوع العمل الفعلي فقط
         const filtered = data.data.filter(
-          (item: Content) =>
-            item.uuid !== show.uuid && item.type === show.type
+          (item: Content) => item.uuid !== show.uuid && item.type === show.type
         );
         setSimilarWorks(filtered);
       })
       .catch(err => console.error(err));
-  }, [type, show.uuid, show.type]);
+  }, [backendUrl, type, show.uuid, show.type]);
 
-  // حساب عدد الحلقات
   const totalEpisodes =
     show.seasons?.reduce(
       (total: number, season: any) => total + (season.episodes?.length || 0),
@@ -94,7 +93,7 @@ export default function WatchClient({ show, type }: WatchClientProps) {
                       ${currentEpisode?.id === ep.id ? "bg-red-700" : "bg-gray-700 hover:bg-red-600"}`}
                   >
                     <img
-                      src={ep.thumbnail || show.poster_image}
+                      src={ep.thumbnail || `${backendUrl}${show.poster_image || show.card_image}`}
                       alt={ep.title}
                       className="w-20 h-12 rounded object-cover flex-shrink-0"
                     />

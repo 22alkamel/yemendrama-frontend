@@ -10,8 +10,10 @@ export default async function WatchPage(props: WatchPageProps) {
   const { params } = props;
   const { type, id } = "then" in params ? await params : params;
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api/v1";
+
   try {
-    const res = await fetch(`http://localhost:8000/api/v1/contents`, {
+    const res = await fetch(`${apiUrl}/contents`, {
       cache: "no-store",
     });
 
