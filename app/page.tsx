@@ -6,6 +6,7 @@ import MovieSection from "../components/MovieSection";
 import { getPublishedContents } from "@/services/content.service";
 
 export const metadata = {
+  
   title: "YemenDrama - الصفحة الرئيسية",
   description: "مشاهدة مسلسلات، أفلام، برامج وبودكاست يمانية عالية الجودة",
   openGraph: {
@@ -70,3 +71,6 @@ export default async function Home() {
     </div>
   );
 }
+
+
+

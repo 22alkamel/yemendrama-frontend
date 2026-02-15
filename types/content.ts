@@ -7,6 +7,7 @@ export interface Episode {
   videoEmbedUrl?: string; // لو تستخدم embed
   thumbnail?: string;
   duration?: string;
+  views_count?:number;
 }
 export interface Season {
   id: number;

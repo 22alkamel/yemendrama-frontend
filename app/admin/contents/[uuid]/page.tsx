@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
@@ -13,9 +13,9 @@ export default function AdminContentDetails() {
 
   const [content, setContent] = useState<any>(null);
   const [tab, setTab] = useState<"seasons" | "episodes" | "people">("seasons");
-  const backendUrl = process.env.NEXT_PUBLIC_API_URL?.replace('/api/v1','') ?? "";
+  const backendUrl =
+    process.env.NEXT_PUBLIC_API_URL?.replace("/api/v1", "") ?? "";
 
-  
   useEffect(() => {
     if (!contentUuid) return;
 
@@ -86,7 +86,20 @@ export default function AdminContentDetails() {
               <div className="flex flex-wrap gap-4 text-sm text-gray-400">
                 <span>📅 {content.year}</span>
                 <span>⭐ {content.rating}</span>
-                <span>👁 {content.views} مشاهدة</span>
+                <span>
+                  👁 {" "}
+                  {content.seasons?.reduce(
+                    (totalSeasons: number, season: any) =>
+                      totalSeasons +
+                      (season.episodes?.reduce(
+                        (totalEpisodes: number, episode: any) =>
+                          totalEpisodes + (episode.views_count || 0),
+                        0
+                      ) || 0),
+                    0
+                  ) || 0}  {" "}
+                    مشاهدة 
+                </span>
                 <span>🎬 {content.type}</span>
               </div>
 
@@ -108,20 +121,43 @@ export default function AdminContentDetails() {
         {/* Stats */}
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
           <StatCard label="عدد المواسم" value={content.seasons_count || 0} />
-          <StatCard label="عدد الحلقات" value= {content.seasons?.reduce(
-          (total: number, season: any) =>
-            total + (season.episodes?.length || 0),
-          0
-        )} />
-          <StatCard label="المشاهدات" value={content.views || 0} />
+          <StatCard
+            label="عدد الحلقات"
+            value={content.seasons?.reduce(
+              (total: number, season: any) =>
+                total + (season.episodes?.length || 0),
+              0
+            )}
+          />
+          <StatCard
+            label="المشاهدات"
+            value={
+              content.seasons?.reduce(
+                (totalSeasons: number, season: any) =>
+                  totalSeasons +
+                  (season.episodes?.reduce(
+                    (totalEpisodes: number, episode: any) =>
+                      totalEpisodes + (episode.views_count || 0),
+                    0
+                  ) || 0),
+                0
+              ) || 0
+            }
+          />
         </div>
 
         {/* Tabs */}
         <div className="flex gap-3 border-b border-gray-800">
-          <TabButton active={tab === "seasons"} onClick={() => setTab("seasons")}>
+          <TabButton
+            active={tab === "seasons"}
+            onClick={() => setTab("seasons")}
+          >
             المواسم
           </TabButton>
-          <TabButton active={tab === "episodes"} onClick={() => setTab("episodes")}>
+          <TabButton
+            active={tab === "episodes"}
+            onClick={() => setTab("episodes")}
+          >
             الحلقات
           </TabButton>
           <TabButton active={tab === "people"} onClick={() => setTab("people")}>

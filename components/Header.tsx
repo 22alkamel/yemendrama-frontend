@@ -34,7 +34,7 @@ export default function Header() {
             </Link>
 
             {/* قائمة اللابتوب */}
-            <nav className="hidden md:flex items-center space-x-reverse space-x-4">
+            <nav className="hidden lg:flex items-center space-x-reverse space-x-4">
               <Link
                 href="/"
                 className="text-white hover:text-red-500 transition-colors whitespace-nowrap"
@@ -129,7 +129,7 @@ export default function Header() {
 
           {/* أدوات البحث والحساب */}
           <div className="flex items-center space-x-reverse space-x-4">
-            <div className="relative hidden md:block">
+            <div className="relative hidden lg:block">
               <input
                 type="text"
                 placeholder="بحث في الأفلام والمسلسلات..."
@@ -155,7 +155,7 @@ export default function Header() {
             </Link>
 
             <button
-              className="md:hidden text-white hover:text-red-500 transition-colors w-6 h-6 flex items-center justify-center"
+              className="lg:hidden text-white hover:text-red-500 transition-colors w-6 h-6 flex items-center justify-center"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               <i
@@ -169,7 +169,7 @@ export default function Header() {
 
         {/* قائمة الجوال */}
         {isMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 border-t border-gray-800 pt-4">
+          <div className="lg:hidden mt-4 pb-4 border-t border-gray-800 pt-4">
             <div className="mb-4">
               <input
                 type="text"

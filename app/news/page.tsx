@@ -59,7 +59,7 @@ export default function NewsHome() {
       {/* Hero */}
       <section
         className="relative bg-cover bg-center text-white"
-        style={{ backgroundImage: "url(/كرتاخضر.jpg)" }}
+        style={{ backgroundImage: "url(/news.jpg)" }}
       >
         <div className="bg-black/70 px-8 py-24 text-center">
           <h2 className="text-4xl md:text-5xl font-bold mt-4">

@@ -56,7 +56,14 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       label: "تصنيفات الاخبار",
       icon: <RiMovie2Fill />,
       href: "/admin/newscategories",
-    }, // ✅ هنا أضفنا التصنيفات
+    },
+     // ✅ هنا أضفنا التصنيفات
+      {
+      key: "social-stats",
+      label: " احصائيات السوشيال ميديا",
+      icon: <RiMovie2Fill />,
+      href: "/admin/social-stats",
+    },
   ];
 
   if (loading) {
