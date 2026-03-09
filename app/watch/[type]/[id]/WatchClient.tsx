@@ -126,10 +126,10 @@ export default function WatchClient({ show, type }: WatchClientProps) {
       )}
 
       {/* ✅ Views Counter */}
-      <div className="mb-6 text-gray-300 text-sm flex items-center gap-2">
+      {/* <div className="mb-6 text-gray-300 text-sm flex items-center gap-2">
         👁️ {views.toLocaleString("en-US")} مشاهدة
 
-      </div>
+      </div> */}
 
       <section className="flex flex-col lg:flex-row gap-8">
         {/* INFO */}
