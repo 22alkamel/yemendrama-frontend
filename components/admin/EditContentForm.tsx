@@ -19,6 +19,7 @@ export default function EditContentForm({
   const [description, setDescription] = useState(content.description ?? "");
   const [type, setType] = useState(content.type ?? "movie");
   const [year, setYear] = useState(content.year ?? "");
+  const [rating, setrating] = useState(content.rating ?? "");
   const [loading, setLoading] = useState(false);
 
   const [cardImage, setCardImage] = useState<File | null>(null);
@@ -85,6 +86,7 @@ export default function EditContentForm({
       formData.append("title", title);
       formData.append("description", description);
       formData.append("type", type);
+      formData.append("rating", rating);
       formData.append("year", String(year));
 
       selectedCategories.forEach((id) =>
@@ -158,6 +160,15 @@ export default function EditContentForm({
           type="number"
           value={year}
           onChange={(e) => setYear(e.target.value)}
+          className="w-full p-2 mt-1 rounded-lg bg-gray-700 text-white"
+        />
+      </div>
+      <div>
+        <label className="text-gray-200 font-medium">التقييم</label>
+        <input
+          type="number"
+          value={rating}
+          onChange={(e) => setrating(e.target.value)}
           className="w-full p-2 mt-1 rounded-lg bg-gray-700 text-white"
         />
       </div>

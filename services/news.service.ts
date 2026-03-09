@@ -20,3 +20,9 @@ export const deleteNews = async (uuid: string) => {
 
 export const toggleNewsPublish = (uuid: string) =>
   api.patch(`/news/${uuid}/publish`);
+
+
+
+export const getSingleNews = (uuid: string) => {
+  return api.get(`/news/${uuid}`);
+};

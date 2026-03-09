@@ -66,7 +66,7 @@ export default function NewsHome() {
             كـل اخبــار <span className="text-red-500">الدرامـــا</span>
           </h2>
           <p className="mt-4 text-lg max-w-2xl mx-auto">
-            موقع يمن ميديا - مصدركم الموثوق لآخر الأخبار والتقارير الحصرية
+            موقع يمن دراما - مصدركم الموثوق لآخر الأخبار والتقارير الحصرية
           </p>
         </div>
       </section>
