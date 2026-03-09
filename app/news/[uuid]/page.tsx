@@ -19,7 +19,7 @@ interface Category {
 interface News {
   uuid: string;
   title: string;
-  description: string;
+  body: string;
   image_url: string;
   created_at: string;
   category?: Category;
@@ -153,7 +153,7 @@ export default function NewsDetails() {
       <section className="max-w-5xl mx-auto px-5 py-12">
         <div className="bg-[#141414] rounded-2xl p-6 md:p-10 shadow-2xl">
           <p className="text-lg leading-9 text-gray-200 whitespace-pre-line">
-            {news.description}
+            {news.body}
           </p>
         </div>
 
